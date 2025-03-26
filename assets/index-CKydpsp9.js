@@ -1,28 +1,28 @@
-(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))a(s);new MutationObserver(s=>{for(const o of s)if(o.type==="childList")for(const n of o.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&a(n)}).observe(document,{childList:!0,subtree:!0});function e(s){const o={};return s.integrity&&(o.integrity=s.integrity),s.referrerPolicy&&(o.referrerPolicy=s.referrerPolicy),s.crossOrigin==="use-credentials"?o.credentials="include":s.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function a(s){if(s.ep)return;s.ep=!0;const o=e(s);fetch(s.href,o)}})();class i{constructor(t){this.routes=t,this.attachEventHandle(),window.addEventListener("popstate",this.handlePopState.bind(this))}addRoute(t,e){this.routes[t]=e}navigationTo(t){history.pushState(null,"",t),this.handleRoute(t)}handlePopState(){this.handleRoute(window.location.pathname)}handleRoute(t){const e=this.routes[t];if(!e)throw new r(t);t==="/profile"&&!localStorage.getItem("user")&&this.navigationTo("/login"),t==="/login"&&localStorage.getItem("user")&&this.navigationTo("/"),t==="/login"?document.getElementById("root").innerHTML=e():document.getElementById("root").innerHTML=m(e())}attachEventHandle(){const t=document.getElementById("root");t.addEventListener("submit",e=>{if(e.preventDefault(),e.target.nodeName==="FORM"&&e.target.id==="login-form"){const a=document.getElementById("username").value;localStorage.setItem("user",JSON.stringify({username:a,email:"",bio:""})),this.navigationTo("/")}if(e.target.tagName==="FORM"&&e.target.id==="profile-form"){const a=document.getElementById("username").value,s=document.getElementById("email").value,o=document.getElementById("bio").value;localStorage.setItem("user",JSON.stringify({username:a,email:s,bio:o})),this.navigationTo("/profile")}}),t.addEventListener("click",e=>{e.target.tagName==="A"&&(e.preventDefault(),e.target.id==="logout"&&(localStorage.removeItem("user"),this.navigationTo("/login")),e.target.pathname.startsWith("/")&&this.navigationTo(e.target.pathname))})}}class r extends Error{constructor(t){super(`Not Found: ${t}`),this.path=t,this.name="HTTP ERROR 404",document.getElementById("root").innerHTML=p()}}const d=()=>`
+(function(){const s=document.createElement("link").relList;if(s&&s.supports&&s.supports("modulepreload"))return;for(const t of document.querySelectorAll('link[rel="modulepreload"]'))l(t);new MutationObserver(t=>{for(const o of t)if(o.type==="childList")for(const n of o.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&l(n)}).observe(document,{childList:!0,subtree:!0});function e(t){const o={};return t.integrity&&(o.integrity=t.integrity),t.referrerPolicy&&(o.referrerPolicy=t.referrerPolicy),t.crossOrigin==="use-credentials"?o.credentials="include":t.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function l(t){if(t.ep)return;t.ep=!0;const o=e(t);fetch(t.href,o)}})();class r{constructor(s){this.routes=s,this.hydrateEventHandle(),window.addEventListener("popstate",this.handlePopState.bind(this)),window.addEventListener("hashchange",this.handleHashChange.bind(this))}addRoute(s,e){this.routes[s]=e}navigationTo(s){history.pushState(null,"",s),this.handleRoute(s)}handlePopState(){this.handleRoute(window.location.pathname)}handleHashChange(){this.handleRoute(window.location.hash.replace("#",""))}handleRoute(s){const e=!!localStorage.getItem("user");let l=s.replace("/index.hash.html","/");console.log(l),s==="/login"&&e&&(history.pushState(null,"","/"),l="/"),s==="/profile"&&!e&&(history.pushState(null,"","/login"),l="/login");const t=this.routes[l];t?l==="/login"?document.getElementById("root").innerHTML=t():document.getElementById("root").innerHTML=m(t()):document.getElementById("root").innerHTML=i()}hydrateEventHandle(){const s=document.getElementById("root");s.addEventListener("submit",e=>{if(e.preventDefault(),e.target.nodeName==="FORM"&&e.target.id==="login-form"){const l=document.getElementById("username").value;localStorage.setItem("user",JSON.stringify({username:l,email:"",bio:""})),this.navigationTo("/")}if(e.target.tagName==="FORM"&&e.target.id==="profile-form"){const l=document.getElementById("username").value,t=document.getElementById("email").value,o=document.getElementById("bio").value;localStorage.setItem("user",JSON.stringify({username:l,email:t,bio:o})),this.navigationTo("/profile")}}),s.addEventListener("click",e=>{e.target.tagName==="A"&&(e.preventDefault(),e.target.id==="logout"&&(localStorage.removeItem("user"),this.navigationTo("/login")),e.target.pathname.startsWith("/")&&this.navigationTo(e.target.pathname))})}}const d=()=>`
     <header class="bg-blue-600 text-white p-4 sticky top-0">
       <h1 class="text-2xl font-bold">항해플러스</h1>
     </header>
     ${c()}
-  `,c=()=>{const l=window.location.pathname;return localStorage.getItem("user")?`<nav class="bg-white shadow-md p-2 sticky top-14" id="NavigationTab">
+  `,c=()=>{const a=window.location.pathname;return localStorage.getItem("user")?`<nav class="bg-white shadow-md p-2 sticky top-14" id="NavigationTab">
       <ul class="flex justify-around">
-        <li><a href="/" class="${l==="/"?"text-blue-600 font-bold":"text-gray-600"}">홈</a></li>
-        <li><a href="/profile" class="${l==="/profile"?"text-blue-600 font-bold":"text-gray-600"}">프로필</a></li>
+        <li><a href="/" class="${a==="/"?"text-blue-600 font-bold":"text-gray-600"}">홈</a></li>
+        <li><a href="/profile" class="${a==="/profile"?"text-blue-600 font-bold":"text-gray-600"}">프로필</a></li>
         <li><a href="#" class="text-gray-600" id="logout">로그아웃</a></li>
       </ul>
     </nav>`:`<nav class="bg-white shadow-md p-2 sticky top-14" id="NavigationTab">
       <ul class="flex justify-around">
-        <li><a href="/" class="${l==="/"?"text-blue-600":"text-gray-600"}">홈</a></li>
+        <li><a href="/" class="${a==="/"?"text-blue-600":"text-gray-600"}">홈</a></li>
         <li><a href="/login" class="text-gray-600">로그인</a></li>
       </ul>
     </nav>`},u=()=>`
 <footer class="bg-gray-200 p-4 text-center">
   <p>&copy; 2024 항해플러스. All rights reserved.</p>
 </footer>
-`,m=l=>`
+`,m=a=>`
   <div class="bg-gray-100 min-h-screen flex justify-center">
     <div class="max-w-md w-full">
     ${d()}
-    ${l}
+    ${a}
     ${u()}
     </div>
   </div>
@@ -116,7 +116,7 @@
     </div>
   </div>
 </main>
-`,p=()=>`
+`,i=()=>`
   <main class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full text-center" style="max-width: 480px">
       <h1 class="text-2xl font-bold text-blue-600 mb-4">항해플러스</h1>
@@ -130,7 +130,7 @@
       </a>
     </div>
   </main>
-`,f=()=>`
+`,p=()=>`
   <main class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <h1 class="text-2xl font-bold text-center text-blue-600 mb-8">항해플러스</h1>
@@ -152,7 +152,7 @@
       </div>
     </div>
   </main>
-`,g=()=>{const{username:l,email:t,bio:e}=JSON.parse(localStorage.getItem("user"));return`
+`,f=()=>{const{username:a,email:s,bio:e}=JSON.parse(localStorage.getItem("user"));return`
         <main class="p-4">
           <div class="bg-white p-8 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">
@@ -169,7 +169,7 @@
                   type="text"
                   id="username"
                   name="username"
-                  value="${l}"
+                  value="${a}"
                   class="w-full p-2 border rounded"
                 />
               </div>
@@ -183,7 +183,7 @@
                   type="email"
                   id="email"
                   name="email"
-                  value="${t}"
+                  value="${s}"
                   class="w-full p-2 border rounded"
                 />
               </div>
@@ -209,4 +209,4 @@
             </form>
           </div>
         </main>
-`},h={"/":()=>b(),"/profile":()=>g(),"/login":()=>f()},v=new i(h);window.addEventListener("load",()=>{v.handleRoute(window.location.pathname)});
+`},g={"/":()=>b(),"/profile":()=>f(),"/login":()=>p(),"/error":()=>i()},h=new r(g);window.addEventListener("load",()=>{const a=window.location.hash?window.location.hash.replace("#",""):window.location.pathname;h.handleRoute(a)});
